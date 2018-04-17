@@ -1,47 +1,146 @@
 ﻿@model HeaderLinksModel
 @using System.Text.Encodings.Web
-<div class="header-links">
-    <ul>
+@*@Model.CustomerName*@
+@*<div class="header-links">
+        <ul>
+            @await Component.InvokeAsync("Widget", new { widgetZone = "header_links_before" })
+            @if (Model.IsAuthenticated)
+            {
+                <li><a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">@T("Account.MyAccount")</a></li>
+                <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            }
+            else
+            {
+                <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+                <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+            }
+            @if (Model.AllowPrivateMessages)
+            {
+                <li>
+                    <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">
+                        <span class="inbox-label">@T("PrivateMessages.Inbox")</span>
+                        <span class="inbox-unread">@Model.UnreadPrivateMessages</span>
+                    </a>
+                </li>
+            }
+            @if (Model.WishlistEnabled)
+            {
+                <li>
+                    <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
+                        <span class="wishlist-label">@T("Wishlist")</span>
+                        <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ShoppingCartEnabled)
+            {
+                <li id="topcartlink">
+                    <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+                        <span class="cart-label">@T("ShoppingCart")</span>
+                        <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
+                    </a>
+                </li>
+            }
+            @await Component.InvokeAsync("Widget", new { widgetZone = "header_links_after" })
+        </ul>
+        @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
+        {
+            //new private message notification
+            <script type="text/javascript" asp-location="Footer">
+                $(document).ready(function () {
+                    displayPopupNotification('@Html.Raw(JavaScriptEncoder.Default.Encode(Model.AlertMessage))', 'success', false);
+                });
+            </script>
+        }
+        @if (Model.ShoppingCartEnabled)
+        {
+            <script type="text/javascript" asp-location="Footer">
+                $(document).ready(function () {
+                    $('.header').on('mouseenter', '#topcartlink', function () {
+                        $('#flyout-cart').addClass('active');
+                    });
+                    $('.header').on('mouseleave', '#topcartlink', function () {
+                        $('#flyout-cart').removeClass('active');
+                    });
+                    $('.header').on('mouseenter', '#flyout-cart', function () {
+                        $('#flyout-cart').addClass('active');
+                    });
+                    $('.header').on('mouseleave', '#flyout-cart', function () {
+                        $('#flyout-cart').removeClass('active');
+                    });
+                });
+            </script>
+        }
+    </div>*@
+
+
+
+@*<div class="toplinks">
+    <div class="links">
+        <div class="myaccount"><a title="My Account" href="login.html"><span class="hidden-xs">My Account</span></a> </div>
+        <div class="check"><a title="Checkout" href="checkout.html"><span class="hidden-xs">Checkout</span></a> </div>
+        <div class="demo"><a title="Blog" href="blog.html"><span class="hidden-xs">Blog</span></a> </div>
+        <!-- Header Company -->
+        <div class="dropdown block-company-wrapper hidden-xs">
+            <a role="button" data-toggle="dropdown" class="block-company dropdown-toggle" href="#"> Company <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li role="presentation"><a href="about_us.html"> About Us </a> </li>
+                <li role="presentation"><a href="#"> Customer Service </a> </li>
+                <li role="presentation"><a href="#"> Privacy Policy </a> </li>
+                <li role="presentation"><a href="sitemap.html">Site Map </a> </li>
+                <li role="presentation"><a href="#">Search Terms </a> </li>
+                <li role="presentation"><a href="#">Advanced Search </a> </li>
+            </ul>
+        </div>
+        <!-- End Header Company -->
+
+        <div class="login"><a href="login.html"><span class="hidden-xs">Log In</span></a> </div>
+    </div>
+</div>*@
+
+
+<div class="toplinks">
+    <div class="links">
         @await Component.InvokeAsync("Widget", new { widgetZone = "header_links_before" })
         @if (Model.IsAuthenticated)
         {
-            <li><a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">@T("Account.MyAccount")@*@Model.CustomerName*@</a></li>
-            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            <div class="login"><a href="@Url.RouteUrl("CustomerInfo")" class="ico-account">@T("Account.MyAccount")@*@Model.CustomerName*@</a></div>
+            <div class="login"><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></div>
         }
         else
         {
-            <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
-            <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+            <div><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></div>
+            <div><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></div>
         }
         @if (Model.AllowPrivateMessages)
         {
-            <li>
+            <div>
                 <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">
                     <span class="inbox-label">@T("PrivateMessages.Inbox")</span>
                     <span class="inbox-unread">@Model.UnreadPrivateMessages</span>
                 </a>
-            </li>
+            </div>
         }
         @if (Model.WishlistEnabled)
         {
-            <li>
+            <div>
                 <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">
                     <span class="wishlist-label">@T("Wishlist")</span>
                     <span class="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
                 </a>
-            </li>
+            </div>
         }
         @if (Model.ShoppingCartEnabled)
         {
-            <li id="topcartlink">
+            <div id="topcartlink">
                 <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
                     <span class="cart-label">@T("ShoppingCart")</span>
                     <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
                 </a>
-            </li>
+            </div>
         }
         @await Component.InvokeAsync("Widget", new { widgetZone = "header_links_after" })
-    </ul>
+    </div>
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
     {
         //new private message notification

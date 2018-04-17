@@ -4,21 +4,68 @@
 @using Nop.Core
 @inject IWebHelper webHelper
 @inject IHttpContextAccessor httpContextAccessor
+@{ 
+    var currentLanguage = Model.AvailableLanguages.FirstOrDefault(z => z.Id == Model.CurrentLanguageId);
+}
+@*@if (Model.AvailableLanguages.Count > 1)
+    {
+        <div class="language-selector">
+            @{
+                var rawUrl = webHelper.GetRawUrl(httpContextAccessor.HttpContext.Request);
+
+                if (Model.UseImages)
+                {
+                    <ul class="language-list">
+                        @foreach (var lang in Model.AvailableLanguages)
+                        {
+                            <li>
+                                <a href="@webHelper.ModifyQueryString(Url.RouteUrl("ChangeLanguage", new {langid = lang.Id}), "returnurl=" + WebUtility.UrlEncode(rawUrl), null)" title="@lang.Name">
+                                    <img title='@lang.Name' alt='@lang.Name' @(lang.Id == Model.CurrentLanguageId ? " class=selected" : null)
+                                         src="@Url.Content("~/images/flags/" + @lang.FlagImageFileName) " />
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    var languages = Model.AvailableLanguages.Select(lang => new SelectListItem
+                    {
+                        Text = lang.Name,
+                        Value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeLanguage", new { langid = lang.Id }), "returnurl=" + WebUtility.UrlEncode(rawUrl), null),
+                        Selected = lang.Id.Equals(Model.CurrentLanguageId)
+                    });
+
+                    <select id="customerlanguage" name="customerlanguage" asp-items="@languages" onchange="setLocation(this.value);"></select>
+                }
+            }
+        </div>
+    }*@
+
+@*<a role="button" data-toggle="dropdown" class="block-language dropdown-toggle" href="#"> <img src="~/Themes/Vitara/Content/images/english.png" alt="language"> English <span class="caret"></span> </a>
+    <ul class="dropdown-menu" role="menu">
+        <li role="presentation"> <a href="#"><img src="~/Themes/Vitara/Content/images/english.png" alt="language"> English </a> </li>
+        <li role="presentation"> <a href="#"><img src="~/Themes/Vitara/Content/images/francais.png" alt="language"> French </a> </li>
+        <li role="presentation"> <a href="#"><img src="~/Themes/Vitara/Content/images/german.png" alt="language"> German </a> </li>
+    </ul>*@
+
+
 @if (Model.AvailableLanguages.Count > 1)
 {
-    <div class="language-selector">
-    @{
+
+    <a role="button" data-toggle="dropdown" class="block-language dropdown-toggle" href="#"> <img src="@Url.Content("~/images/flags/" + @currentLanguage.FlagImageFileName)" alt="language"> @currentLanguage.Name <span class="caret"></span></a>
+    {
         var rawUrl = webHelper.GetRawUrl(httpContextAccessor.HttpContext.Request);
 
         if (Model.UseImages)
         {
-            <ul class="language-list">
+            <ul class="dropdown-menu" role="menu">
                 @foreach (var lang in Model.AvailableLanguages)
                 {
-                    <li>
+                    <li role="presentation">
                         <a href="@webHelper.ModifyQueryString(Url.RouteUrl("ChangeLanguage", new {langid = lang.Id}), "returnurl=" + WebUtility.UrlEncode(rawUrl), null)" title="@lang.Name">
                             <img title='@lang.Name' alt='@lang.Name' @(lang.Id == Model.CurrentLanguageId ? " class=selected" : null)
-                                 src="@Url.Content("~/images/flags/" + @lang.FlagImageFileName) "/>
+                                 src="@Url.Content("~/images/flags/" + @lang.FlagImageFileName) " />
                         </a>
                     </li>
                 }
@@ -33,8 +80,13 @@
                 Selected = lang.Id.Equals(Model.CurrentLanguageId)
             });
 
-            <select id="customerlanguage" name="customerlanguage" asp-items="@languages" onchange="setLocation(this.value);"></select>
+            <ul class="dropdown-menu" role="menu">
+                @foreach (var item in Model.AvailableLanguages)
+                {
+                    var value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeLanguage", new { langid = item.Id }), "returnurl=" + WebUtility.UrlEncode(rawUrl), null);
+                    <li role="presentation"><a href="#" onclick="setLocation('@value')" ><img src="@Url.Content("~/images/flags/" + @item.FlagImageFileName)" alt="language"> @item.Name</a> </li>
+                }
+            </ul>
         }
     }
-    </div>
 }
