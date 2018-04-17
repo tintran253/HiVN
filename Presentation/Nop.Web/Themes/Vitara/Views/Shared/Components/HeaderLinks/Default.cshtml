@@ -130,7 +130,7 @@
                 </a>
             </div>
         }
-        @if (Model.ShoppingCartEnabled)
+        @*@if (Model.ShoppingCartEnabled)
         {
             <div id="topcartlink">
                 <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
@@ -138,7 +138,7 @@
                     <span class="cart-qty">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
                 </a>
             </div>
-        }
+        }*@
         @await Component.InvokeAsync("Widget", new { widgetZone = "header_links_after" })
     </div>
     @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
@@ -150,7 +150,7 @@
             });
         </script>
     }
-    @if (Model.ShoppingCartEnabled)
+    @*@if (Model.ShoppingCartEnabled)
     {
         <script type="text/javascript" asp-location="Footer">
             $(document).ready(function () {
@@ -168,5 +168,5 @@
                 });
             });
         </script>
-    }
+    }*@
 </div>

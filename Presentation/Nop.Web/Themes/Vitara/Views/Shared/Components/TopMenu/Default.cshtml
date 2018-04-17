@@ -1,6 +1,6 @@
 ﻿@model TopMenuModel
 
-
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
 
 <nav>
     <div class="container">
@@ -13,17 +13,20 @@
                         </div>
                         <div class="mega-menu-category">
                             <ul class="nav">
-                                <li id="nav-home">
-                                    <a href="index.html"><i class="fa fa-home"></i> Home</a>
-                                    <div class="wrap-popup column1">
-                                        <div class="popup">
-                                            <ul class="nav">
-                                                <li><a href="index.html">Home Version 1</a></li>
-                                                <li><a href="../home2/index.html">Home Version 2</a></li>
-                                            </ul>
+                                @if (Model.DisplayHomePageMenuItem)
+                                {
+                                    <li id="nav-home">
+                                        <a href="@Url.RouteUrl("HomePage")"><i class="fa fa-home"></i> @T("HomePage")</a>
+                                        <div class="wrap-popup column1">
+                                            <div class="popup">
+                                                <ul class="nav">
+                                                    <li><a href="index.html">Home Version 1</a></li>
+                                                    <li><a href="../home2/index.html">Home Version 2</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                }
                                 <li>
                                     <a href="#"><i class="fa fa-file-text"></i> Page</a>
                                     <div class="wrap-popup">
@@ -363,41 +366,7 @@
                 <div class="top-cart-contain">
                     <!-- Top Cart -->
                     <div class="mini-cart">
-                        <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="shopping_cart.html"><span class="price">My Cart</span> <span class="cart_count">2</span> </a> </div>
-                        <div>
-                            <div class="top-cart-content">
-
-                                <!--block-subtitle-->
-                                <ul class="mini-products-list" id="cart-sidebar">
-                                    <li class="item first">
-                                        <div class="item-inner">
-                                            <a class="product-image" title="Retis lapen casen" href="#l"><img alt="Retis lapen casen" src="~/Themes/Vitara/Content/products-images/product4.jpg"> </a>
-                                            <div class="product-details">
-                                                <div class="access"><a class="btn-remove1" title="Remove This Item" href="#">Remove</a> <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a> </div>
-                                                <!--access--><strong>1</strong> x <span class="price">$179.99</span>
-                                                <p class="product-name"><a href="#">Retis lapen casen...</a> </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item last">
-                                        <div class="item-inner">
-                                            <a class="product-image" title="Retis lapen casen" href="product_detail.html"><img alt="Retis lapen casen" src="~/Themes/Vitara/Content/products-images/product3.jpg"> </a>
-                                            <div class="product-details">
-                                                <div class="access"><a class="btn-remove1" title="Remove This Item" href="#">Remove</a> <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a> </div>
-                                                <!--access--><strong>1</strong> x <span class="price">$80.00</span>
-                                                <p class="product-name"><a href="#">Retis lapen casen...</a> </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <!--actions-->
-                                <div class="actions">
-                                    <button class="btn-checkout" title="Checkout" type="button" onclick="window.location.href='checkout.html'"><span>Checkout</span> </button>
-                                    <a href="shopping_cart.html" class="view-cart"><span>View Cart</span></a>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("FlyoutShoppingCart")
                     </div>
                     <!-- Top Cart -->
 
