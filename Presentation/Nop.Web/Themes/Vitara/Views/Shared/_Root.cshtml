@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "_Root.Head";
+}
+@await Component.InvokeAsync("Widget", new { widgetZone = "body_start_html_tag_after" })
+@await Html.PartialAsync("_Notifications")
+@await Html.PartialAsync("_JavaScriptDisabledWarning")
+@await Html.PartialAsync("_OldInternetExplorerWarning")
+<div class="master-wrapper-page" id="page">
+    @await Component.InvokeAsync("AdminHeaderLinks")
+    @await Html.PartialAsync("_Header")
+    <script type="text/javascript" asp-location="Footer">
+        AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+    </script>
+
+    @await Component.InvokeAsync("TopMenu")
+
+    @*<div class="header-menu">
+        @await Component.InvokeAsync("TopMenu")
+    </div>*@
+
+    <div class="our-features-box hidden-xs">
+        <div class="container">
+            <div class="features-block">
+                <div class="col-md-3 col-xs-12 col-sm-6">
+                    <div class="feature-box first">
+                        <span class="fa fa-truck">&nbsp;</span>
+                        <div class="content">
+                            <h3>FREE SHIPPING WORLDWIDE</h3>
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-6">
+                    <div class="feature-box">
+                        <span class="fa fa-headphones">&nbsp;</span>
+                        <div class="content">
+                            <h3>24X7 CUSTOMER SUPPORT</h3>
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-6">
+                    <div class="feature-box">
+                        <span class="fa fa-dollar">&nbsp;</span>
+                        <div class="content">
+                            <h3>MONEY BACK GUARANTEE</h3>
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-6">
+                    <div class="feature-box last">
+                        <span class="fa fa-mobile">&nbsp;</span>
+                        <div class="content">
+                            <h3>Hotline  +(888) 123-4567</h3>
+                            Lorem ipsum dolor sit amet.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+    <br />
+    <br />
+
+    <div class="master-wrapper-content">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "content_before" })
+
+        @if (IsSectionDefined("Breadcrumb"))
+        {
+            @RenderSection("Breadcrumb")
+        }
+        <div class="master-column-wrapper">
+            @RenderBody()
+        </div>
+        @await Component.InvokeAsync("Widget", new { widgetZone = "content_after" })
+    </div>
+    @await Component.InvokeAsync("Footer")
+</div>
+@await Component.InvokeAsync("EuCookieLaw")
+@await Component.InvokeAsync("Widget", new { widgetZone = "body_end_html_tag_before" })
