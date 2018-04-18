@@ -66,81 +66,82 @@
             }
         </div>
     </div>*@
-
-<div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="@(Url.RouteUrl("ShoppingCart"))"><span class="price">My Cart</span> <span class="cart_count">@Model.TotalProducts</span> </a> </div>
-<div id="flyout-cart" >
-    <div class="top-cart-content">
-        @*<div class="count">
-            @if (Model.TotalProducts == 0)
-            {
-                @T("ShoppingCart.Mini.NoItems")
-            }
-            else
-            {
-                @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, $"<a href=\"{Url.RouteUrl("ShoppingCart")}\">{string.Format(T("ShoppingCart.Mini.Items").Text, Model.TotalProducts)}</a>"))
-            }
-        </div>*@
-        @if (Model.TotalProducts > 0)
-        {
-            <!--block-subtitle-->
-            <ul class="mini-products-list" id="cart-sidebar">
-                @for (var i = 0; i < Model.Items.Count; i++)
-                {
-                    var item = Model.Items[i];
-
-
-                    <li class="item @(i == Model.Items.Count - 1 ? "last" : null) @(i == 0 ? "first" : null)">
-                        <div class="item-inner">
-                            @if (Model.ShowProductImages)
-                            {
-                                <a class="product-image" title="@item.Picture.Title" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /> </a>
-                            }
-                            @*<div class="access">
-                                <a class="btn-remove1" title="Remove This Item" href="#">Remove</a>
-                                <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a>
-                            </div>*@
-                            <!--access-->
-                            <div class="product-details">
-
-                                @if (!string.IsNullOrEmpty(item.AttributeInfo))
-                                {
-                                    <div class="attributes">
-                                        @Html.Raw(item.AttributeInfo)
-                                    </div>
-                                }
-                                <strong>@T("ShoppingCart.Mini.Quantity"):@item.Quantity</strong> x <span class="price">@T("ShoppingCart.Mini.UnitPrice"):@item.UnitPrice</span>
-                                <p class="product-name"><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a> </p>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-            @*<div class="totals">@T("ShoppingCart.Totals.SubTotal"): <strong>@Model.SubTotal</strong></div>*@
-            <!--actions-->
-            <div class="actions">
-                @if (Model.DisplayCheckoutButton)
-                {
-                    var checkoutUrl = "";
-                    if (Model.AnonymousCheckoutAllowed && Model.CurrentCustomerIsGuest)
+<div id="flyout-cart">
+    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="@(Url.RouteUrl("ShoppingCart"))"><span class="price">My Cart</span> <span class="cart_count">@Model.TotalProducts</span> </a> </div>
+    <div>
+        <div class="top-cart-content">
+            @*<div class="count">
+                    @if (Model.TotalProducts == 0)
                     {
-                        checkoutUrl = Url.RouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
+                        @T("ShoppingCart.Mini.NoItems")
                     }
                     else
                     {
-                        checkoutUrl = Url.RouteUrl("Checkout");
+                        @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, $"<a href=\"{Url.RouteUrl("ShoppingCart")}\">{string.Format(T("ShoppingCart.Mini.Items").Text, Model.TotalProducts)}</a>"))
                     }
-                    @*<input type="button" value="@T("Checkout.Button")" class="button-1 checkout-button" onclick="setLocation('@checkoutUrl')" />*@
-                    <button class="btn-checkout" title="Checkout" type="button" onclick="setLocation('@checkoutUrl')"><span>@T("Checkout.Button")</span> </button>
+                </div>*@
+            @if (Model.TotalProducts > 0)
+            {
+                <!--block-subtitle-->
+                <ul class="mini-products-list" id="cart-sidebar">
+                    @for (var i = 0; i < Model.Items.Count; i++)
+                    {
+                        var item = Model.Items[i];
 
-                }
-                @if (Model.DisplayShoppingCartButton)
-                {
-                    @*<input type="button" value="@T("ShoppingCart.Mini.ViewCart")" class="button-1 cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" />*@
-                    <a href="#" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" class="view-cart"><span>@T("ShoppingCart.Mini.ViewCart")</span></a>
 
-                }
+                        <li class="item @(i == Model.Items.Count - 1 ? "last" : null) @(i == 0 ? "first" : null)">
+                            <div class="item-inner">
+                                @if (Model.ShowProductImages)
+                                {
+                                    <a class="product-image" title="@item.Picture.Title" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /> </a>
+                                }
+                                @*<div class="access">
+                                        <a class="btn-remove1" title="Remove This Item" href="#">Remove</a>
+                                        <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a>
+                                    </div>*@
+                                <!--access-->
+                                <div class="product-details">
 
-            </div>
-        }
+                                    @if (!string.IsNullOrEmpty(item.AttributeInfo))
+                                    {
+                                        <div class="attributes">
+                                            @Html.Raw(item.AttributeInfo)
+                                        </div>
+                                    }
+                                    <strong>@T("ShoppingCart.Mini.Quantity"):@item.Quantity</strong> x <span class="price">@T("ShoppingCart.Mini.UnitPrice"):@item.UnitPrice</span>
+                                    <p class="product-name"><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a> </p>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                @*<div class="totals">@T("ShoppingCart.Totals.SubTotal"): <strong>@Model.SubTotal</strong></div>*@
+                <!--actions-->
+                <div class="actions">
+                    @if (Model.DisplayCheckoutButton)
+                    {
+                        var checkoutUrl = "";
+                        if (Model.AnonymousCheckoutAllowed && Model.CurrentCustomerIsGuest)
+                        {
+                            checkoutUrl = Url.RouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
+                        }
+                        else
+                        {
+                            checkoutUrl = Url.RouteUrl("Checkout");
+                        }
+                        @*<input type="button" value="@T("Checkout.Button")" class="button-1 checkout-button" onclick="setLocation('@checkoutUrl')" />*@
+                        <button class="btn-checkout" title="Checkout" type="button" onclick="setLocation('@checkoutUrl')"><span>@T("Checkout.Button")</span> </button>
+
+                    }
+                    @if (Model.DisplayShoppingCartButton)
+                    {
+                        @*<input type="button" value="@T("ShoppingCart.Mini.ViewCart")" class="button-1 cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" />*@
+                        <a href="#" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" class="view-cart"><span>@T("ShoppingCart.Mini.ViewCart")</span></a>
+
+                    }
+
+                </div>
+            }
+        </div>
     </div>
 </div>
