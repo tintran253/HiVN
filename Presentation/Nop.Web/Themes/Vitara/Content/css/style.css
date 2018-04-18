@@ -110,10 +110,10 @@ Text Domain:  Vitara
 /*----------- 1. Body --------------*/
 
 body {
-	font-family: "Poppins", sans-serif;
-	font-size: 13px;
-	color: #333;
-	background: #fff;
+    font-family: "Poppins", Helvetica, sans-serif;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
 }
 h2, .h2 {
 	font-size: 20px;
