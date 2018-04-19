@@ -1,6 +1,6 @@
 ﻿@model TopMenuModel
 
-
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
 
 <nav>
     <div class="container">
@@ -13,17 +13,31 @@
                         </div>
                         <div class="mega-menu-category">
                             <ul class="nav">
-                                <li id="nav-home">
-                                    <a href="index.html"><i class="fa fa-home"></i> Home</a>
-                                    <div class="wrap-popup column1">
-                                        <div class="popup">
-                                            <ul class="nav">
-                                                <li><a href="index.html">Home Version 1</a></li>
-                                                <li><a href="../home2/index.html">Home Version 2</a></li>
-                                            </ul>
+                                @if (Model.DisplayHomePageMenuItem)
+                                {
+                                    <li id="nav-home">
+                                        <a href="@Url.RouteUrl("HomePage")"><i class="fa fa-home"></i> @T("HomePage")</a>
+                                        <div class="wrap-popup column1">
+                                            <div class="popup">
+                                                <ul class="nav">
+                                                    <li><a href="index.html">Home Version 1</a></li>
+                                                    <li><a href="../home2/index.html">Home Version 2</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                }
+                                @{
+                                    var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+                                }
+                                @foreach (var category in rootCategories)
+                                {
+                                    var categoryLineModel = new TopMenuModel.CategoryLineModel
+                                    {
+                                        Category = category
+                                    };
+                                    @await Html.PartialAsync("_CategoryLine.TopMenu", categoryLineModel)
+                                }
                                 <li>
                                     <a href="#"><i class="fa fa-file-text"></i> Page</a>
                                     <div class="wrap-popup">
@@ -327,9 +341,11 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nosub"> <a href="grid.html"><i class="fa fa-microphone"></i> TV &amp; Audio</a> </li>
-                                <li class="nosub"> <a href="grid.html"><i class="fa fa-gear"></i> Software</a> </li>
-                                <li class="nosub"> <a href="grid.html"><i class="fa fa-print"></i> Printer &amp; Enk</a> </li>
+
+                                @if (Model.DisplayContactUsMenuItem)
+                                {
+                                    <li class="nosub"> <a href="@Url.RouteUrl("ContactUs")"><i class="fa fa-address-book"></i> @T("ContactUs")</a> </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -337,23 +353,7 @@
             </div>
             <div class="col-lg-7 col-md-5 col-sm-5 col-xs-3 hidden-xs category-search-form">
                 <div class="search-box">
-                    <form id="search_mini_form" action="#" method="get">
-                        <select name="cat" id="cat" class="cate-dropdown hidden-sm hidden-md">
-                            <option>All Categories</option>
-                            <option value="1014">Electronics</option>
-                            <option value="1035">Furniture</option>
-                            <option value="1051">Boys</option>
-                            <option value="1052">Girls</option>
-                            <option value="1053">Bags</option>
-                            <option value="1054">Shoes</option>
-                            <option value="962">Women</option>
-                            <option value="988">Men</option>
-                        </select>
-
-                        <!-- Autocomplete End code -->
-                        <input id="search" type="text" name="q" value="Search entire store here..." class="searchbox" maxlength="128">
-                        <button type="submit" title="Search" class="search-btn-bg" id="submit-button"><span>Search</span></button>
-                    </form>
+                    @await Component.InvokeAsync("SearchBox")
                 </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 card_wishlist_area">
@@ -363,52 +363,279 @@
                 <div class="top-cart-contain">
                     <!-- Top Cart -->
                     <div class="mini-cart">
-                        <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="shopping_cart.html"><span class="price">My Cart</span> <span class="cart_count">2</span> </a> </div>
-                        <div>
-                            <div class="top-cart-content">
-
-                                <!--block-subtitle-->
-                                <ul class="mini-products-list" id="cart-sidebar">
-                                    <li class="item first">
-                                        <div class="item-inner">
-                                            <a class="product-image" title="Retis lapen casen" href="#l"><img alt="Retis lapen casen" src="~/Themes/Vitara/Content/products-images/product4.jpg"> </a>
-                                            <div class="product-details">
-                                                <div class="access"><a class="btn-remove1" title="Remove This Item" href="#">Remove</a> <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a> </div>
-                                                <!--access--><strong>1</strong> x <span class="price">$179.99</span>
-                                                <p class="product-name"><a href="#">Retis lapen casen...</a> </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item last">
-                                        <div class="item-inner">
-                                            <a class="product-image" title="Retis lapen casen" href="product_detail.html"><img alt="Retis lapen casen" src="~/Themes/Vitara/Content/products-images/product3.jpg"> </a>
-                                            <div class="product-details">
-                                                <div class="access"><a class="btn-remove1" title="Remove This Item" href="#">Remove</a> <a class="btn-edit" title="Edit item" href="#"><i class="icon-pencil"></i><span class="hidden">Edit item</span></a> </div>
-                                                <!--access--><strong>1</strong> x <span class="price">$80.00</span>
-                                                <p class="product-name"><a href="#">Retis lapen casen...</a> </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <!--actions-->
-                                <div class="actions">
-                                    <button class="btn-checkout" title="Checkout" type="button" onclick="window.location.href='checkout.html'"><span>Checkout</span> </button>
-                                    <a href="shopping_cart.html" class="view-cart"><span>View Cart</span></a>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("FlyoutShoppingCart")
                     </div>
                     <!-- Top Cart -->
 
                 </div>
                 <!-- mgk wishlist -->
-                <div class="mgk-wishlist"><a title="My Wishlist" href="wishlist.html"><i class="fa fa-heart"></i><span class="title-wishlist hidden-xs">Wishlist</span></a></div>
+                <div class="mgk-wishlist"><a title="My Wishlist" href="@Url.RouteUrl("Wishlist")"><i class="fa fa-heart"></i><span class="title-wishlist hidden-xs">@T("Wishlist")</span></a></div>
             </div>
         </div>
     </div>
-
 </nav>
+
+
+
+<!-- mobile menu -->
+<div id="mobile-menu">
+    <ul class="mobile-menu">
+        <li>
+            <div class="mm-search">
+                @await Component.InvokeAsync("SearchBox")
+            </div>
+            <!--mm-search-->
+
+        </li>
+        @if (Model.DisplayHomePageMenuItem)
+        {
+            <li>
+
+                <a href="@Url.RouteUrl("HomePage")"><i class="fa fa-home"></i> @T("HomePage")</a>
+
+            </li>
+        }
+        <li>
+            <a href="#">Pages</a>
+            <ul>
+                <li><a href="grid.html">Grid</a> </li>
+                <li><a href="list.html">List</a> </li>
+                <li><a href="product_detail.html">Product Detail</a> </li>
+                <li><a href="shopping_cart.html">Shopping Cart</a> </li>
+                <li><a href="checkout.html">Checkout</a> </li>
+                <li><a href="wishlist.html">Wishlist</a> </li>
+                <li><a href="dashboard.html">Dashboard</a> </li>
+                <li><a href="multiple_addresses.html">Multiple Addresses</a> </li>
+                <li><a href="about_us.html">About us</a> </li>
+                <li>
+                    <a href="blog.html">Blog</a>
+                    <ul>
+                        <li><a href="blog-detail.html">Blog Detail</a> </li>
+                    </ul>
+                </li>
+                <li><a href="contact_us.html">Contact us</a> </li>
+                <li><a href="404error.html">404 Error Page</a> </li>
+            </ul>
+        </li>
+        <li class="level0 nav-1 level-top first parent">
+            <a href="grid.html"> <span>Mobiles</span> </a>
+            <ul>
+                <li>
+                    <a href="grid.html"> <span>Samsung</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Smartphones</span> </a> </li>
+                        <li><a href="grid.html"> <span>Android Mobiles</span> </a> </li>
+                        <li><a href="grid.html"> <span>Tablets</span> </a> </li>
+                        <li><a href="grid.html"> <span>Wearable Mobiles</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Nokia</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Windows Mobiles</span> </a> </li>
+                        <li><a href="grid.html"> <span>Landline Phone</span> </a> </li>
+                        <li><a href="grid.html"> <span>Ipad</span> </a> </li>
+                        <li><a href="grid.html"> <span>Refurbished</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>iPhone</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Apple 7S</span> </a> </li>
+                        <li><a href="grid.html"> <span>Apple 5 Series </span> </a> </li>
+                        <li><a href="grid.html"> <span>Apple 6S</span> </a> </li>
+                        <li><a href="grid.html"> <span>Apple 4R</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Sony</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Xperia</span> </a> </li>
+                        <li><a href="grid.html"> <span>Ultra Dual</span> </a> </li>
+                        <li><a href="grid.html"> <span>X Performance</span> </a> </li>
+                        <li><a href="grid.html"> <span>Premium Compact Z5</span> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="grid.html"> <span>Accesories</span> </a>
+            <ul>
+                <li>
+                    <a href="grid.html"> <span>Mobile Memory</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Volatile Memory</span> </a> </li>
+                        <li><a href="grid.html"> <span>Non-Volatile Memory</span> </a> </li>
+                        <li><a href="grid.html"> <span>MicroSD</span> </a> </li>
+                        <li><a href="grid.html"> <span> Mini SD Memory</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Cases &amp; covers</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Transparent Silicone</span> </a> </li>
+                        <li><a href="grid.html"> <span>Plastic Back Cover</span> </a> </li>
+                        <li><a href="grid.html"> <span>Rugged Cases</span> </a> </li>
+                        <li><a href="grid.html"> <span>Hybrid Back Cover</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Mobile Headphones</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Jack Headsfree</span> </a> </li>
+                        <li><a href="grid.html"> <span>Premuim Quality</span> </a> </li>
+                        <li><a href="grid.html"> <span>Infographic</span> </a> </li>
+                        <li><a href="grid.html"> <span>Cushioned Earcups</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Bluetooth Headsets</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Plantronics BackBeat</span> </a> </li>
+                        <li><a href="grid.html"> <span>Air-Fi Runaway</span> </a> </li>
+                        <li><a href="grid.html"> <span>Jabra Motion</span> </a> </li>
+                        <li><a href="grid.html"> <span>Jawbone Era</span> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="grid.html"> <span>Appliances</span> </a> </li>
+        <li>
+            <a href="grid.html"> <span>Cameras</span> </a>
+            <ul>
+                <li>
+                    <a href="grid.html"> <span>Camcorders</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Flash Memory</span> </a> </li>
+                        <li><a href="grid.html"> <span>Filmmaking</span> </a> </li>
+                        <li><a href="grid.html"> <span>Combo Models</span> </a> </li>
+                        <li><a href="grid.html"> <span>Mini-DV Camcorders</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Point &amp; Shoot</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Bridge Compact</span> </a> </li>
+                        <li><a href="grid.html"> <span>Nikon CoolPix</span> </a> </li>
+                        <li><a href="grid.html"> <span>Sony Alpha</span> </a> </li>
+                        <li><a href="grid.html"> <span>Canon Digital</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Digital SLR</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Nikon D810</span> </a> </li>
+                        <li><a href="grid.html"> <span>Canon EOS</span> </a> </li>
+                        <li><a href="grid.html"> <span>Cropped Sensor</span> </a> </li>
+                        <li><a href="grid.html"> <span>Full-Frame Sensor</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Lens</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Photochromic</span> </a> </li>
+                        <li><a href="grid.html"> <span>Polarized Sunglasses</span> </a> </li>
+                        <li><a href="grid.html"> <span>Polycarbonate</span> </a> </li>
+                        <li><a href="grid.html"> <span>Aspheric</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Projectors</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>LCD Projection</span> </a> </li>
+                        <li><a href="grid.html"> <span>Laser Projector</span> </a> </li>
+                        <li><a href="grid.html"> <span>Digital</span> </a> </li>
+                        <li><a href="grid.html"> <span>Portable</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Binoculars</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Roof Prism</span> </a> </li>
+                        <li><a href="grid.html"> <span>Porro Prism</span> </a> </li>
+                        <li><a href="grid.html"> <span>Astronomical Binoculars</span> </a> </li>
+                        <li><a href="grid.html"> <span>Celestron SkyMaster</span> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="grid.html"> <span>Computer</span> </a>
+            <ul>
+                <li>
+                    <a href="grid.html"> <span>External Hard Disk</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Seagate Backup Plus</span> </a> </li>
+                        <li><a href="grid.html"> <span>Sata Firewire</span> </a> </li>
+                        <li><a href="grid.html"> <span>TB External Hard Disk</span> </a> </li>
+                        <li><a href="grid.html"> <span>Solid State Disk</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Pendrives</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Keychain USB Flash</span> </a> </li>
+                        <li><a href="grid.html"> <span>Wristband Flash Drive</span> </a> </li>
+                        <li><a href="grid.html"> <span>Dummy Head Drive</span> </a> </li>
+                        <li><a href="grid.html"> <span>Hybrid Dual Drive</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>Headphones</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Cushioned Earcups </span> </a> </li>
+                        <li><a href="grid.html"> <span>Earbuds Headphones</span> </a> </li>
+                        <li><a href="grid.html"> <span>In-ear Headphones</span> </a> </li>
+                        <li><a href="grid.html"> <span>Over-the-Ear Headphones</span> </a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="grid.html"> <span>PC Components</span> </a>
+                    <ul>
+                        <li><a href="grid.html"> <span>Submenu 1</span> </a> </li>
+                        <li><a href="grid.html"> <span>Submenu 2</span> </a> </li>
+                        <li><a href="grid.html"> <span>Submenu 3</span> </a> </li>
+                        <li><a href="grid.html"> <span>Submenu 4</span> </a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="grid.html"> <span>TV &amp; Audio</span> </a> </li>
+        <li><a href="grid.html"> <span>Software</span> </a> </li>
+        <li><a href="grid.html"> <span>Printer &amp; Enk</span> </a> </li>
+    </ul>
+    <div class="top-links">
+        <div class="lang-curr">
+            <div class="dropdown block-language-wrapper">
+                <a href="#" class="block-language dropdown-toggle" data-toggle="dropdown" role="button"> <img src="images/english.png" alt="english"> English <span class="caret"></span> </a>
+                <ul role="menu" class="dropdown-menu">
+                    <li><a href="#"> <img src="images/english.png" alt="English"> English </a></li>
+                    <li><a href="#"> <img src="images/francais.png" alt="French"> French </a></li>
+                    <li><a href="#"> <img src="images/german.png" alt="German"> German </a></li>
+                </ul>
+            </div>
+            <!--dropdown block-language-wrapper-->
+
+            <div class="dropdown block-currency-wrapper">
+                <a href="#" class="block-currency dropdown-toggle" data-toggle="dropdown" role="button"> USD <span class="caret"></span></a>
+                <ul role="menu" class="dropdown-menu">
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem" title="EGP"> £ - EGP</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem" title="EUR"> € - EUR</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem" title="USD"> $ - USD</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--lang-curr-->
+        <ul class="links">
+            <li><a href="login.html" title="My Account">My Account</a></li>
+            <li><a href="wishlist.html" title="Wishlist">Wishlist</a></li>
+            <li><a href="checkout.html" title="Checkout">Checkout</a></li>
+            <li><a href="blog.html" title="Blog"><span>Blog</span></a></li>
+            <li class="last"><a href="login.html" title="Log In"><span>Log In</span></a></li>
+        </ul>
+    </div>
+</div>
+
 @*<ul class="top-menu">
         @await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
         @if (Model.DisplayHomePageMenuItem)

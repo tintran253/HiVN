@@ -110,10 +110,10 @@ Text Domain:  Vitara
 /*----------- 1. Body --------------*/
 
 body {
-	font-family: "Poppins", sans-serif;
-	font-size: 13px;
-	color: #333;
-	background: #fff;
+    font-family: "Poppins", Helvetica, sans-serif;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
 }
 h2, .h2 {
 	font-size: 20px;
@@ -427,7 +427,8 @@ header .header-top-links {
 	text-decoration: none;
 }
 .toplinks div.links div a:hover {
-	color: #014693 !important;
+	/*color: #014693 !important;*/
+	color: white !important;
 	text-decoration: none;
 }
 .toplinks div.links div a:hover span {
@@ -507,15 +508,16 @@ header .header-top-links {
 	border-radius: 0;  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
 }
 #search {
-	margin: 0;
-	width: 432px;
-	font-size: 13px;
-	height: 35px;
-	color: #666;
-	padding: 0 20px;
-	background: none;
-	outline: none;
-	border: none;
+    margin: 0;
+    /*width: 432px;*/
+    width: 655px;
+    font-size: 13px;
+    height: 35px;
+    color: #666;
+    padding: 0 20px;
+    background: none;
+    outline: none;
+    border: none;
 }
 .cate-dropdown {
 	border: medium none;
