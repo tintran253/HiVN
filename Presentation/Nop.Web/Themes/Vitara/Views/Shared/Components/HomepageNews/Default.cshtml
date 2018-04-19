@@ -1,7 +1,7 @@
 ﻿@model HomePageNewsItemsModel
 @if (Model.NewsItems.Count > 0)
 {
-    <div class="news-list-homepage">
+    @*<div class="news-list-homepage">
         <div class="title">
             <strong>@T("News")</strong>
         </div>
@@ -23,8 +23,65 @@
             }
         </div>
         <div class="view-all">
-            <a href="@Url.RouteUrl("NewsArchive")">@T("News.ViewAll")</a>
+                <a href="@Url.RouteUrl("NewsArchive")">@T("News.ViewAll")</a>
+            </div>
+    </div>*@
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="blog-outer-container">
+                    <div class="block-title">
+                        <h2>@T("News")</h2>
+                        <div class="hidden-xs"><a style="color:white;" href="@Url.RouteUrl("NewsArchive")">@T("News.ViewAll")</a></div>
+                    </div>
+                    <div class="blog-inner">
+                        @foreach (var item in Model.NewsItems)
+                        {
+                            <div class="col-lg-4 col-md-4 col-sm-4 blog-preview_item">
+                                <h4 class="blog-preview_title"><a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })">@item.Title</a></h4>
+                                @*<div class="entry-thumb image-hover2"> <a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })"> <img alt="Blog" src="images/blog-img1.jpg"> </a> </div>*@
+                                <div class="blog-preview_info">
+                                    <ul class="post-meta">
+                                        @*<li><i class="fa fa-user"></i>posted by <a href="#">admin</a> </li>
+                                        <li><i class="fa fa-comments"></i><a href="#">8 comments</a> </li>*@
+                                        <li><i class="fa fa-clock-o"></i><span class="day">@item.CreatedOn.ToString("D")</span> </li>
+                                        @*<span class="month">@item.CreatedOn.ToString("D")</span>*@
+                                    </ul>
+                                    <div class="blog-preview_desc">@Html.Raw(item.Short)</div>
+                                    <a class="blog-preview_btn" href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })">@T("News.MoreInfo")</a>
+                                </div>
+                            </div>
+                        }
+                        @*<div class="col-lg-4 col-md-4 col-sm-4 blog-preview_item">
+                                <h4 class="blog-preview_title"><a href="blog_single_post.html">Standard blog post with photo</a></h4>
+                                <div class="entry-thumb image-hover2"> <a href="blog_single_post.html"> <img alt="Blog" src="images/blog-img2.jpg"> </a> </div>
+                                <div class="blog-preview_info">
+                                    <ul class="post-meta">
+                                        <li><i class="fa fa-user"></i>posted by <a href="#">admin</a> </li>
+                                        <li><i class="fa fa-comments"></i><a href="#">4 comments</a> </li>
+                                        <li><i class="fa fa-clock-o"></i><span class="day">25</span> <span class="month">Jan</span></li>
+                                    </ul>
+                                    <div class="blog-preview_desc">Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros.</div>
+                                    <a class="blog-preview_btn" href="blog_single_post.html">READ MORE</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 blog-preview_item">
+                                <h4 class="blog-preview_title"><a href="blog_single_post.html">Standard blog post with photo</a></h4>
+                                <div class="entry-thumb image-hover2"> <a href="blog_single_post.html"> <img alt="Blog" src="images/blog-img3.jpg"> </a> </div>
+                                <div class="blog-preview_info">
+                                    <ul class="post-meta">
+                                        <li><i class="fa fa-user"></i>posted by <a href="#">admin</a> </li>
+                                        <li><i class="fa fa-comments"></i><a href="#">4 comments</a> </li>
+                                        <li><i class="fa fa-clock-o"></i><span class="day">10</span> <span class="month">Jan</span></li>
+                                    </ul>
+                                    <div class="blog-preview_desc">Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros.</div>
+                                    <a class="blog-preview_btn" href="blog_single_post.html">READ MORE</a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 }
+

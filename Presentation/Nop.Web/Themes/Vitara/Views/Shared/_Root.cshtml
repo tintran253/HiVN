@@ -66,14 +66,16 @@
     <br />
     <br />
 
-    <div class="master-wrapper-content">
+    @*<div class="master-wrapper-content">*@
+    <div class="container">
         @await Component.InvokeAsync("Widget", new { widgetZone = "content_before" })
 
         @if (IsSectionDefined("Breadcrumb"))
         {
             @RenderSection("Breadcrumb")
         }
-        <div class="master-column-wrapper">
+        @*<div class="master-column-wrapper">*@
+        <div class="row">
             @RenderBody()
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = "content_after" })
