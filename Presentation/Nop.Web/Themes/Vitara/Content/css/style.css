@@ -7476,8 +7476,8 @@ a.shop-now-btn {
 	background: #F03434;
 }
 .social {
-	float: left;
-	margin-top: 4px;
+	/*float: left;
+	margin-top: 4px;*/
 }
 .social ul {
 	float: left;
