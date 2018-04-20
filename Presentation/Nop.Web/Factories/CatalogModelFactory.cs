@@ -69,19 +69,19 @@ namespace Nop.Web.Factories
         #region Ctor
 
         public CatalogModelFactory(IProductModelFactory productModelFactory,
-            ICategoryService categoryService, 
+            ICategoryService categoryService,
             IManufacturerService manufacturerService,
-            IProductService productService, 
+            IProductService productService,
             IVendorService vendorService,
             ICategoryTemplateService categoryTemplateService,
             IManufacturerTemplateService manufacturerTemplateService,
-            IWorkContext workContext, 
+            IWorkContext workContext,
             IStoreContext storeContext,
             ICurrencyService currencyService,
-            IPictureService pictureService, 
+            IPictureService pictureService,
             ILocalizationService localizationService,
             IPriceFormatter priceFormatter,
-            IWebHelper webHelper, 
+            IWebHelper webHelper,
             ISpecificationAttributeService specificationAttributeService,
             IProductTagService productTagService,
             IAclService aclService,
@@ -94,7 +94,7 @@ namespace Nop.Web.Factories
             CatalogSettings catalogSettings,
             VendorSettings vendorSettings,
             BlogSettings blogSettings,
-            ForumSettings  forumSettings,
+            ForumSettings forumSettings,
             IStaticCacheManager cacheManager,
             DisplayDefaultMenuItemSettings displayDefaultMenuItemSettings)
         {
@@ -140,9 +140,9 @@ namespace Nop.Web.Factories
         /// <returns>List of child category identifiers</returns>
         protected virtual List<int> GetChildCategoryIds(int parentCategoryId)
         {
-            var cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY, 
-                parentCategoryId, 
-                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
+            var cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_CHILD_IDENTIFIERS_MODEL_KEY,
+                parentCategoryId,
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                 _storeContext.CurrentStore.Id);
             return _cacheManager.Get(cacheKey, () =>
             {
@@ -264,7 +264,7 @@ namespace Nop.Web.Factories
             pagingFilteringModel.AllowCustomersToSelectPageSize = false;
             if (allowCustomersToSelectPageSize && pageSizeOptions != null)
             {
-                var pageSizes = pageSizeOptions.Split(new [] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var pageSizes = pageSizeOptions.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (pageSizes.Any())
                 {
@@ -327,9 +327,9 @@ namespace Nop.Web.Factories
                 command.PageSize = fixedPageSize;
             }
         }
-        
+
         #endregion
-        
+
         #region Categories
 
         /// <summary>
@@ -360,8 +360,8 @@ namespace Nop.Web.Factories
             PrepareViewModes(model.PagingFilteringContext, command);
             //page size
             PreparePageSizeOptions(model.PagingFilteringContext, command,
-                category.AllowCustomersToSelectPageSize, 
-                category.PageSizeOptions, 
+                category.AllowCustomersToSelectPageSize,
+                category.PageSizeOptions,
                 category.PageSize);
 
             //price ranges
@@ -493,11 +493,11 @@ namespace Nop.Web.Factories
                 categoryIds: categoryIds,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
-                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?) false,
+                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
                 priceMin: minPriceConverted,
                 priceMax: maxPriceConverted,
                 filteredSpecs: alreadyFilteredSpecOptionIds,
-                orderBy: (ProductSortingEnum) command.OrderBy,
+                orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
             model.Products = _productModelFactory.PrepareProductOverviewModels(products).ToList();
@@ -506,12 +506,12 @@ namespace Nop.Web.Factories
 
             //specs
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
-                filterableSpecificationAttributeOptionIds != null ? filterableSpecificationAttributeOptionIds.ToArray() : null, 
-                _specificationAttributeService, 
-                _webHelper, 
+                filterableSpecificationAttributeOptionIds != null ? filterableSpecificationAttributeOptionIds.ToArray() : null,
+                _specificationAttributeService,
+                _webHelper,
                 _workContext,
                 _cacheManager);
-            
+
             return model;
         }
 
@@ -579,7 +579,7 @@ namespace Nop.Web.Factories
             var cachedCategoriesModel = PrepareCategorySimpleModels();
 
             //top menu topics
-            var topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY, 
+            var topicCacheKey = string.Format(ModelCacheEventConsumer.TOPIC_TOP_MENU_MODEL_KEY,
                 _workContext.WorkingLanguage.Id,
                 _storeContext.CurrentStore.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()));
@@ -621,10 +621,10 @@ namespace Nop.Web.Factories
             var pictureSize = _mediaSettings.CategoryThumbPictureSize;
 
             var categoriesCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HOMEPAGE_KEY,
-                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                 pictureSize,
                 _storeContext.CurrentStore.Id,
-                _workContext.WorkingLanguage.Id, 
+                _workContext.WorkingLanguage.Id,
                 _webHelper.IsCurrentConnectionSecured());
 
             var model = _cacheManager.Get(categoriesCacheKey, () =>
@@ -656,6 +656,22 @@ namespace Nop.Web.Factories
                         };
                         return pictureModel;
                     });
+
+                    // Tin: prepare top 10 products 
+                    var categoryProductCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PRODUCT_MODEL_KEY, category.Id, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+                    catModel.Products = _cacheManager.Get(categoryProductCacheKey, () =>
+                    {
+                        var products = _productService.SearchProducts(
+                               storeId: 0,
+                               categoryIds: new List<int> { category.Id },
+                               //languageId: _workContext.WorkingLanguage.Id,
+                               orderBy: ProductSortingEnum.CreatedOn,                               
+                               pageIndex: 0,
+                               pageSize: 10
+                           );
+                        return _productModelFactory.PrepareProductOverviewModels(products).ToList();
+                    });
+
 
                     return catModel;
                 })
@@ -744,9 +760,9 @@ namespace Nop.Web.Factories
 
             return result;
         }
-        
+
         #endregion
-        
+
         #region Manufacturers
 
         /// <summary>
@@ -801,7 +817,7 @@ namespace Nop.Web.Factories
                 IPagedList<Product> featuredProducts = null;
 
                 //We cache a value indicating whether we have featured products
-                var cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_HAS_FEATURED_PRODUCTS_KEY, 
+                var cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_HAS_FEATURED_PRODUCTS_KEY,
                     manufacturer.Id,
                     string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                     _storeContext.CurrentStore.Id);
@@ -839,10 +855,10 @@ namespace Nop.Web.Factories
                 manufacturerId: manufacturer.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
-                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?) false,
+                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
                 priceMin: minPriceConverted,
                 priceMax: maxPriceConverted,
-                orderBy: (ProductSortingEnum) command.OrderBy,
+                orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
             model.Products = _productModelFactory.PrepareProductOverviewModels(products).ToList();
@@ -922,8 +938,8 @@ namespace Nop.Web.Factories
         /// <returns>Manufacturer navigation model</returns>
         public virtual ManufacturerNavigationModel PrepareManufacturerNavigationModel(int currentManufacturerId)
         {
-            var cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_NAVIGATION_MODEL_KEY, 
-                currentManufacturerId, 
+            var cacheKey = string.Format(ModelCacheEventConsumer.MANUFACTURER_NAVIGATION_MODEL_KEY,
+                currentManufacturerId,
                 _workContext.WorkingLanguage.Id,
                 string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
                 _storeContext.CurrentStore.Id);
@@ -951,12 +967,12 @@ namespace Nop.Web.Factories
                 }
                 return model;
             });
-            
+
             return cachedModel;
         }
-        
+
         #endregion
-        
+
         #region Vendors
 
         /// <summary>
@@ -998,7 +1014,7 @@ namespace Nop.Web.Factories
                 vendorId: vendor.Id,
                 storeId: _storeContext.CurrentStore.Id,
                 visibleIndividuallyOnly: true,
-                orderBy: (ProductSortingEnum) command.OrderBy,
+                orderBy: (ProductSortingEnum)command.OrderBy,
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
             model.Products = _productModelFactory.PrepareProductOverviewModels(products).ToList();
@@ -1077,12 +1093,12 @@ namespace Nop.Web.Factories
                 }
                 return model;
             });
-            
+
             return cachedModel;
         }
-        
+
         #endregion
-        
+
         #region Product tags
 
         /// <summary>
@@ -1144,7 +1160,7 @@ namespace Nop.Web.Factories
                 TagName = productTag.GetLocalized(y => y.Name),
                 TagSeName = productTag.GetSeName()
             };
-            
+
             //sorting
             PrepareSortingOptions(model.PagingFilteringContext, command);
             //view mode
@@ -1198,9 +1214,9 @@ namespace Nop.Web.Factories
             };
             return model;
         }
-        
+
         #endregion
-        
+
         #region Searching
 
         /// <summary>
@@ -1229,10 +1245,10 @@ namespace Nop.Web.Factories
                 _catalogSettings.SearchPagePageSizeOptions,
                 _catalogSettings.SearchPageProductsPerPage);
 
-            var cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY, 
+            var cacheKey = string.Format(ModelCacheEventConsumer.SEARCH_CATEGORIES_MODEL_KEY,
                 _workContext.WorkingLanguage.Id,
-                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()), 
-                _storeContext.CurrentStore.Id); 
+                string.Join(",", _workContext.CurrentCustomer.GetCustomerRoleIds()),
+                _storeContext.CurrentStore.Id);
             var categories = _cacheManager.Get(cacheKey, () =>
             {
                 var categoriesModel = new List<SearchModel.CategoryModel>();
@@ -1241,7 +1257,7 @@ namespace Nop.Web.Factories
                 foreach (var c in allCategories)
                 {
                     //generate full category name (breadcrumb)
-                    var categoryBreadcrumb= "";
+                    var categoryBreadcrumb = "";
                     var breadcrumb = c.GetCategoryBreadCrumb(allCategories, _aclService, _storeMappingService);
                     for (var i = 0; i <= breadcrumb.Count - 1; i++)
                     {
@@ -1261,10 +1277,10 @@ namespace Nop.Web.Factories
             {
                 //first empty entry
                 model.AvailableCategories.Add(new SelectListItem
-                    {
-                         Value = "0",
-                         Text = _localizationService.GetResource("Common.All")
-                    });
+                {
+                    Value = "0",
+                    Text = _localizationService.GetResource("Common.All")
+                });
                 //all other categories
                 foreach (var c in categories)
                 {
@@ -1367,7 +1383,7 @@ namespace Nop.Web.Factories
 
                         searchInDescriptions = model.sid;
                     }
-                    
+
                     //var searchInProductTags = false;
                     var searchInProductTags = searchInDescriptions;
 
@@ -1443,7 +1459,7 @@ namespace Nop.Web.Factories
             };
             return model;
         }
-        
+
         #endregion
     }
 }

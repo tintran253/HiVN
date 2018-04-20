@@ -16,15 +16,15 @@
                                 @if (Model.DisplayHomePageMenuItem)
                                 {
                                     <li id="nav-home">
-                                        <a href="@Url.RouteUrl("HomePage")"><i class="fa fa-home"></i> @T("HomePage")</a>
-                                        <div class="wrap-popup column1">
+                                        <a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a>
+                                        @*<div class="wrap-popup column1">
                                             <div class="popup">
                                                 <ul class="nav">
                                                     <li><a href="index.html">Home Version 1</a></li>
                                                     <li><a href="../home2/index.html">Home Version 2</a></li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </li>
                                 }
                                 @{
@@ -38,7 +38,7 @@
                                     };
                                     @await Html.PartialAsync("_CategoryLine.TopMenu", categoryLineModel)
                                 }
-                                <li>
+                                @*<li>
                                     <a href="#"><i class="fa fa-file-text"></i> Page</a>
                                     <div class="wrap-popup">
                                         <div class="popup">
@@ -340,7 +340,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li>*@
 
                                 @if (Model.DisplayContactUsMenuItem)
                                 {
@@ -358,7 +358,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 card_wishlist_area">
                 <div class="mm-toggle-wrap">
-                    <div class="mm-toggle"><i class="fa fa-align-justify"></i><span class="mm-label">Menu</span> </div>
+                    <div class="mm-toggle"><i class="fa fa-align-justify"></i><span class="mm-label">@T("Menu")</span> </div>
                 </div>
                 <div class="top-cart-contain">
                     <!-- Top Cart -->

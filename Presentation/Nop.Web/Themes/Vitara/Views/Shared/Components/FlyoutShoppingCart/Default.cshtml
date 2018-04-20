@@ -67,7 +67,7 @@
         </div>
     </div>*@
 <div id="flyout-cart">
-    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="@(Url.RouteUrl("ShoppingCart"))"><span class="price">My Cart</span> <span class="cart_count">@Model.TotalProducts</span> </a> </div>
+    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="@(Url.RouteUrl("ShoppingCart"))"><span class="price">@T("checkout.progress.cart")</span> <span class="cart_count">@Model.TotalProducts</span> </a> </div>
     <div>
         <div class="top-cart-content">
             @*<div class="count">

@@ -560,9 +560,12 @@ namespace Nop.Web.Infrastructure.Cache
         /// {4} : is connection SSL secured?
         /// {5} : current store ID
         /// </remarks>
-        public const string CATEGORY_PICTURE_MODEL_KEY = "Nop.pres.category.picture-{0}-{1}-{2}-{3}-{4}-{5}";
+        public const string CATEGORY_PICTURE_MODEL_KEY = "Nop.pres.category.picture-{0}-{1}-{2}-{3}-{4}-{5}";        
         public const string CATEGORY_PICTURE_PATTERN_KEY = "Nop.pres.category.picture";
         public const string CATEGORY_PICTURE_PATTERN_KEY_BY_ID = "Nop.pres.category.picture-{0}-";
+
+
+        public const string CATEGORY_PRODUCT_MODEL_KEY = "Nop.pres.category.product-{0}-{1}-{2}-{3}-{4}";
 
         /// <summary>
         /// Key for manufacturer picture caching
