@@ -657,26 +657,39 @@ namespace Nop.Web.Factories
                         return pictureModel;
                     });
 
-                    // Tin: prepare top 10 products 
-                    var categoryProductCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PRODUCT_MODEL_KEY, category.Id, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
-                    catModel.Products = _cacheManager.Get(categoryProductCacheKey, () =>
-                    {
-                        var products = _productService.SearchProducts(
-                               storeId: 0,
-                               categoryIds: new List<int> { category.Id },
-                               //languageId: _workContext.WorkingLanguage.Id,
-                               orderBy: ProductSortingEnum.CreatedOn,                               
-                               pageIndex: 0,
-                               pageSize: 10
-                           );
-                        return _productModelFactory.PrepareProductOverviewModels(products).ToList();
-                    });
-
-
                     return catModel;
                 })
                 .ToList()
             );
+
+            model.ForEach(x =>
+            {
+                // Tin: prepare top 10 new products 
+                //var categoryProductCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PRODUCT_MODEL_KEY, x.Id, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+                //x.Products = _cacheManager.Get(categoryProductCacheKey, () =>
+                //{
+                //    var products = _productService.SearchProducts(
+                //           storeId: 0,
+                //           categoryIds: new List<int> { x.Id },
+                //           //languageId: _workContext.WorkingLanguage.Id,
+                //           orderBy: ProductSortingEnum.CreatedOn,
+                //           pageIndex: 0,
+                //           pageSize: 10
+                //       );
+                //    _cacheManager.Set(categoryProductCacheKey, products, 60);
+                //    return _productModelFactory.PrepareProductOverviewModels(products, true).ToList();
+                //});
+
+                var products = _productService.SearchProducts(
+                          storeId: 0,
+                          categoryIds: new List<int> { x.Id },
+                          //languageId: _workContext.WorkingLanguage.Id,
+                          orderBy: ProductSortingEnum.CreatedOn,
+                          pageIndex: 0,
+                          pageSize: 10
+                      );
+                x.Products = _productModelFactory.PrepareProductOverviewModels(products).ToList();
+            });
 
             return model;
         }

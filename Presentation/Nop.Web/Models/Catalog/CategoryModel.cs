@@ -42,6 +42,7 @@ namespace Nop.Web.Models.Catalog
             public SubCategoryModel()
             {
                 PictureModel = new PictureModel();
+                Products = new List<ProductOverviewModel>();
             }
 
             public string Name { get; set; }
@@ -51,8 +52,11 @@ namespace Nop.Web.Models.Catalog
             public string Description { get; set; }
 
             public PictureModel PictureModel { get; set; }
+
+            public IList<ProductOverviewModel> Products { get; set; }
+
         }
 
-		#endregion
+        #endregion
     }
 }
