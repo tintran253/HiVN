@@ -31,3 +31,5 @@ Libraries/Nop.Data/obj/
 Libraries/Nop.Services/obj/
 Plugins/Nop.Plugin.DiscountRules.CustomerRoles/obj/
 .vs/NopCommerce/v15/Server/sqlite3/
+Nop.Plugin.Widgets.TTTSlider/obj/
+Plugins/Nop.Plugin.Widgets.TTTSlider/obj/
