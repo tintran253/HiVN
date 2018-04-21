@@ -45,8 +45,10 @@
 
     <!-- We copy the \Logs directory -->
     <Content Include="Logs\**" CopyToPublishDirectory="PreserveNewest" />
+    <None Remove="Themes\Vitara\Ref\List.html" />
     <None Remove="Themes\Vitara\Ref\NewFolder\language_pack.xml" />
     <None Remove="Themes\Vitara\Ref\products.xlsx" />
+    <None Remove="Themes\Vitara\Ref\Product_Detail.html" />
     <None Include="Themes\Vitara\Views\Home\Index.cshtml" />
     <None Include="Themes\Vitara\Views\Shared\Components\AdminHeaderLinks\Default.cshtml" />
     <None Include="Themes\Vitara\Views\Shared\Components\BlogRssHeaderLink\Default.cshtml" />

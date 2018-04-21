@@ -29,20 +29,29 @@
         liClass += " last";
     }
 }
-<li class="@liClass">
-    <a href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">@Model.Category.Name
+@*<li>
+
+
+    </li>*@
+
+
+<li>
+    <a class="@liClass" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+        @Model.Category.Name
         @if (Model.Category.NumberOfProducts.HasValue)
         {
             <text> </text>@T("Categories.TotalProducts", Model.Category.NumberOfProducts.Value)
         }
     </a>
+
     @{
-        if (Model.Category.Id == Model.CurrentCategoryId ||
-            Model.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+        //if (Model.Category.Id == Model.CurrentCategoryId ||
+        //    Model.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+        //{
+        if (Model.Category.SubCategories.Count > 0)
         {
-            if (Model.Category.SubCategories.Count > 0)
-            {
-                <ul class="sublist">
+                <span class="subDropdown @(active ? "minus": "plus") "></span>
+                <ul style="display:@(active ? "block": "none" )">
                     @foreach (var subCategory in Model.Category.SubCategories)
                     {
                         var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
@@ -54,6 +63,20 @@
                     }
                 </ul>
             }
-        }
+        @*}*@
     }
+    @*<ul class="level0_415" style="display: none;">
+            <li>
+                <a href="grid.html"> Tops </a> <span class="subDropdown plus"></span>
+                <ul class="level1" style="display: block;">
+                    <li> <a href="grid.html"> Evening Tops </a> </li>
+                    <li> <a href="grid.html"> Shirts &amp; Blouses </a> </li>
+                    <li> <a href="grid.html"> Tunics </a> </li>
+                    <li> <a href="grid.html"> Vests </a> </li>
+                    <!--end for-each -->
+                </ul>
+                <!--level1-->
+            </li>
+        </ul>*@
+    <!--level0-->
 </li>

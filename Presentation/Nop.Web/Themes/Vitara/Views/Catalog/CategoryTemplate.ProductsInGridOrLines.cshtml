@@ -24,7 +24,7 @@
 }
 @*category breadcrumb*@
 @section Breadcrumb
-{
+    {
     @if (Model.DisplayCategoryBreadcrumb)
     {
         <div class="breadcrumb">
@@ -132,16 +132,24 @@
 
         @if (Model.Products.Count > 0)
         {
-            <div class="block-content @(Model.PagingFilteringContext.ViewMode == "list" ? "product-list" : "products-grid")">
-                <div class="item-grid">
+            if (Model.PagingFilteringContext.ViewMode == "list")
+            {
+                <ol class="block-content products-list">
                     @foreach (var product in Model.Products)
                     {
-                        <div class="item-box">
-                            @await Html.PartialAsync("_ProductBox", product)
-                        </div>
+                        @await Html.PartialAsync("_ProductBoxList", product)
+                    }
+                </ol>
+            }
+            else
+            {
+                <div class="block-content products-grid">
+                    @foreach (var product in Model.Products)
+                    {
+                        @await Html.PartialAsync("_ProductBox", product)
                     }
                 </div>
-            </div>
+            }
         }
         @{
             var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");

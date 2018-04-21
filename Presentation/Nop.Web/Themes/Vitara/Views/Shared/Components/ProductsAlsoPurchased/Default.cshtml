@@ -1,15 +1,26 @@
 ﻿@model IList<ProductOverviewModel>
 @if (Model.Count > 0)
 {
-    <div class="also-purchased-products-grid products-grid block-content">
-        <div class="title">
-            <strong>@T("Products.AlsoPurchased")</strong>
-        </div>
-        <div class="item-grid">
-            @foreach (var item in Model)
-            {
-                <div class="item-box">@await Html.PartialAsync("_ProductBox", item)</div>
-            }
+    <div class="container">
+        <div class="related-pro">
+            <div class="slider-items-products">
+                <div class="related-block">
+                    <div id="related-products-slider" class="product-flexslider hidden-buttons">
+                        <div class="home-block-inner">
+                            <div class="block-title">
+                                <h2>@T("Products.AlsoPurchased")</h2>
+                                <div class="hidden-xs hidden-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                            </div>
+                        </div>
+                        <div class="slider-items slider-width-col4 products-grid block-content">
+                            @foreach (var item in Model)
+                            {
+                                @await Html.PartialAsync("_ProductBoxSlider", item)
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
