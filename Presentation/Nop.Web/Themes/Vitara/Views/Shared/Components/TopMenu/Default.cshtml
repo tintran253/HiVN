@@ -15,7 +15,7 @@
                             <ul class="nav">
                                 @if (Model.DisplayHomePageMenuItem)
                                 {
-                                    <li id="nav-home">
+                                    <li class="nosub" id="nav-home">
                                         <a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a>
                                         @*<div class="wrap-popup column1">
                                             <div class="popup">
@@ -344,7 +344,7 @@
 
                                 @if (Model.DisplayContactUsMenuItem)
                                 {
-                                    <li class="nosub"> <a href="@Url.RouteUrl("ContactUs")"><i class="fa fa-address-book"></i> @T("ContactUs")</a> </li>
+                                    <li class="nosub"> <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> </li>
                                 }
                             </ul>
                         </div>
@@ -607,11 +607,11 @@
     <div class="top-links">
         <div class="lang-curr">
             <div class="dropdown block-language-wrapper">
-                <a href="#" class="block-language dropdown-toggle" data-toggle="dropdown" role="button"> <img src="images/english.png" alt="english"> English <span class="caret"></span> </a>
+                <a href="#" class="block-language dropdown-toggle" data-toggle="dropdown" role="button"> <img src="~/Themes/Vitara/Content/images/english.png" alt="english"> English <span class="caret"></span> </a>
                 <ul role="menu" class="dropdown-menu">
-                    <li><a href="#"> <img src="images/english.png" alt="English"> English </a></li>
-                    <li><a href="#"> <img src="images/francais.png" alt="French"> French </a></li>
-                    <li><a href="#"> <img src="images/german.png" alt="German"> German </a></li>
+                    <li><a href="#"> <img src="~/Themes/Vitara/Content/images/english.png" alt="English"> English </a></li>
+                    <li><a href="#"> <img src="~/Themes/Vitara/Content/images/francais.png" alt="French"> French </a></li>
+                    <li><a href="#"> <img src="~/Themes/Vitara/Content/images/german.png" alt="German"> German </a></li>
                 </ul>
             </div>
             <!--dropdown block-language-wrapper-->

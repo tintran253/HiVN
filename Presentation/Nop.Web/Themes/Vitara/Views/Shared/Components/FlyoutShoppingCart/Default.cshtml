@@ -115,9 +115,12 @@
                         </li>
                     }
                 </ul>
-                @*<div class="totals">@T("ShoppingCart.Totals.SubTotal"): <strong>@Model.SubTotal</strong></div>*@
+
                 <!--actions-->
                 <div class="actions">
+                    <hr />
+                    <div class="totals">@T("ShoppingCart.Totals.SubTotal"): <strong>@Model.SubTotal</strong></div>
+                    <br />
                     @if (Model.DisplayCheckoutButton)
                     {
                         var checkoutUrl = "";
@@ -136,7 +139,7 @@
                     @if (Model.DisplayShoppingCartButton)
                     {
                         @*<input type="button" value="@T("ShoppingCart.Mini.ViewCart")" class="button-1 cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" />*@
-                        <a href="#" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" class="view-cart"><span>@T("ShoppingCart.Mini.ViewCart")</span></a>
+                        <a onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')" class="view-cart"><span>@T("ShoppingCart.Mini.ViewCart")</span></a>
 
                     }
 

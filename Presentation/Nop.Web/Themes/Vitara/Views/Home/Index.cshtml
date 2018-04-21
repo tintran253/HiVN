@@ -8,7 +8,17 @@
 <div class="page home-page">
     <div class="page-body">
         @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" })
-        @await Component.InvokeAsync("TopicBlock", new { systemName = "HomePageText" })
+        <!-- promotion banner -->
+        <div class="promotion-banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4"><a href="#"><img alt="" src="~/Themes/Vitara/Content/images/banner1.png"></a></div>
+                    <div class="col-lg-5 col-sm-5 last"><a href="#"><img alt="" src="~/Themes/Vitara/Content/images/banner2.png"></a></div>
+                    <div class="col-lg-3 col-sm-3 last"><a href="#"><img alt="" src="~/Themes/Vitara/Content/images/banner3.png"></a></div>
+                </div>
+            </div>
+        </div>
+        @*@await Component.InvokeAsync("TopicBlock", new { systemName = "HomePageText" })*@
         @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_categories" })
         @await Component.InvokeAsync("HomepageCategories")
         @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_best_sellers" })

@@ -1,23 +1,30 @@
 ﻿@model SocialModel
-<ul class="networks">
-	@if (!string.IsNullOrEmpty(Model.FacebookLink))
-	{
-		<li class="facebook"><a href="@Model.FacebookLink" target="_blank">@T("Footer.FollowUs.Facebook")</a></li>
-	}
-	@if (!string.IsNullOrEmpty(Model.TwitterLink))
-	{
-		<li class="twitter"><a href="@Model.TwitterLink" target="_blank">@T("Footer.FollowUs.Twitter")</a></li>
-	}
-	@if (Model.NewsEnabled)
-	{
-		<li class="rss"><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a></li>
-	}
-	@if (!string.IsNullOrEmpty(Model.YoutubeLink))
-	{
-		<li class="youtube"><a href="@Model.YoutubeLink" target="_blank">@T("Footer.FollowUs.Youtube")</a></li>
-	}
-	@if (!string.IsNullOrEmpty(Model.GooglePlusLink))
-	{
-		<li class="google-plus"><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></li>
-	}
+<ul>
+    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+    {
+        @*@T("Footer.FollowUs.Facebook")*@
+        <li class="fb"><a href="@Model.FacebookLink" target="_blank"></a></li>
+    }
+    @if (!string.IsNullOrEmpty(Model.TwitterLink))
+    {
+        @*@T("Footer.FollowUs.Twitter")*@
+        <li class="tw"><a href="@Model.TwitterLink" target="_blank"></a></li>
+    }
+    @if (Model.NewsEnabled)
+    {
+        @*@T("Footer.FollowUs.RSS")*@
+        <li class="rss"><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})"></a></li>
+    }
+    @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+    {
+        @*@T("Footer.FollowUs.Youtube")*@
+        <li class="youtube"><a href="@Model.YoutubeLink" target="_blank"></a></li>
+    }
+    @if (!string.IsNullOrEmpty(Model.GooglePlusLink))
+    {
+        @*@T("Footer.FollowUs.GooglePlus")*@
+        <li class="googleplus"><a href="@Model.GooglePlusLink" target="_blank"></a></li>
+    }
 </ul>
+@*<li class="pintrest"><a href="#"></a></li>
+<li class="linkedin"><a href="#"></a></li>*@

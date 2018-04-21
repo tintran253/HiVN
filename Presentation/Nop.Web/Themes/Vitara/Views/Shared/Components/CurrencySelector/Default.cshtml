@@ -4,9 +4,15 @@
 @using Nop.Core
 @inject IWebHelper webHelper
 @inject IHttpContextAccessor httpContextAccessor
+
+@{
+    var currentCurrency = Model.AvailableCurrencies.FirstOrDefault(z => z.Id == Model.CurrentCurrencyId);
+}
+
 @if (Model.AvailableCurrencies.Count > 1)
 {
-    <div class="currency-selector">
+    <a role="button" data-toggle="dropdown" class="block-currency dropdown-toggle" href="#">@currentCurrency.CurrencySymbol - @currentCurrency.Name <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
         @{
             var currencies = Model.AvailableCurrencies.Select(x => new SelectListItem
             {
@@ -14,7 +20,18 @@
                 Value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeCurrency", new { customercurrency = x.Id }), "returnurl=" + WebUtility.UrlEncode(webHelper.GetRawUrl(httpContextAccessor.HttpContext.Request)), null),
                 Selected = x.Id.Equals(Model.CurrentCurrencyId)
             });
-            <select id="customerCurrency" name="customerCurrency" asp-items="@currencies" onchange="setLocation(this.value);"></select>
+
+            @foreach (var item in Model.AvailableCurrencies)
+            {
+                var value = webHelper.ModifyQueryString(Url.RouteUrl("ChangeCurrency", new { customercurrency = item.Id }), "returnurl=" + WebUtility.UrlEncode(webHelper.GetRawUrl(httpContextAccessor.HttpContext.Request)), null);
+                <li><a onclick="setLocation('@value');">@item.CurrencySymbol - @item.Name </a> </li>
+
+            }
         }
-    </div>
+    </ul>
+
+    @*<div class="currency-selector">
+
+        <select id="customerCurrency" name="customerCurrency" asp-items="@currencies" onchange="setLocation(this.value);"></select>
+    </div>*@
 }

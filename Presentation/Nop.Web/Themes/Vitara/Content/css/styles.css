@@ -901,8 +901,8 @@ label, label + * {
 
 
 .footer {
-	background-color: #eee;
-	text-align: center;
+	/*background-color: #eee;*/
+	/*text-align: center;*/
 }
 
 .footer-upper {
