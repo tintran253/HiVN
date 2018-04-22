@@ -640,6 +640,7 @@ namespace Nop.Web.Factories
                         MetaDescription = category.GetLocalized(x => x.MetaDescription),
                         MetaTitle = category.GetLocalized(x => x.MetaTitle),
                         SeName = category.GetSeName(),
+                        ParentId = category.ParentCategoryId                        
                     };
 
                     //prepare picture model

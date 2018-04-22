@@ -108,10 +108,11 @@ Text Domain:  Vitara
 
 
 /*----------- 1. Body --------------*/
-
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+@import url('https://fonts.googleapis.com/css?family=Cabin');
 body {
-    font-family: "Poppins", Helvetica, sans-serif;
-    font-size: 13px;
+    font-family: Cabin, Titillium, "Poppins", Helvetica, sans-serif;
+    font-size: 14px;
     color: #333;
     background: #fff;
 }

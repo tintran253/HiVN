@@ -60,6 +60,7 @@ namespace Nop.Web.Components
             //ACL and store mapping
             products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
             //availability dates
+            //Tin: 
             products = products.Where(p => p.IsAvailable()).ToList();
 
             if (!products.Any())
