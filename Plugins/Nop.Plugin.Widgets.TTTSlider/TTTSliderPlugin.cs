@@ -30,12 +30,12 @@ namespace Nop.Plugin.Widgets.TTTSlider
             {
                 SystemName = "TTTSlider",
                 Title = "TTT Sliders",
-                ControllerName = "ControllerName",
-                ActionName = "List",
+                ControllerName = "TTTSlider",
+                ActionName = "Configure",
                 Visible = true,
                 RouteValues = new RouteValueDictionary() { { "area", null } },
             };
-            var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
+            var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "TTT Slider plugins");
             if (pluginNode != null)
                 pluginNode.ChildNodes.Add(menuItem);
             else

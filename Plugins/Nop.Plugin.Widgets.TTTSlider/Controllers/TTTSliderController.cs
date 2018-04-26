@@ -12,5 +12,10 @@ namespace Nop.Plugin.Widgets.TTTSlider.Controllers
     [Area(AreaNames.Admin)]
     public class TTTSliderController: BasePluginController
     {
+
+        public IActionResult Configure()
+        {
+            return View();
+        }
     }
 }

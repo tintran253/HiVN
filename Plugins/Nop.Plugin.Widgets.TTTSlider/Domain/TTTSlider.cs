@@ -16,6 +16,7 @@ namespace Nop.Plugin.Widgets.TTTSlider.Domain
         public string Hint { get; set; }
         public string Description { get; set; }
         public string UrlActionClick { get; set; }
+        public bool IsActive { get; set; }
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
         public int StoreId { get; set; }
