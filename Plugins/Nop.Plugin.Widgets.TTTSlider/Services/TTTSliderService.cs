@@ -19,7 +19,14 @@ namespace Nop.Plugin.Widgets.TTTSlider.Services
 
         public void Add(Domain.TTTSlider slider)
         {
-            throw new NotImplementedException();
+            _tttSliderRepository.Insert(slider);            
+        }
+
+        public IEnumerable<Domain.TTTSlider> GetAll()
+        {
+            return from s in _tttSliderRepository.Table
+                   where s.IsActive == true
+                   select s;                   
         }
     }
 }

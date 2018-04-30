@@ -89,7 +89,7 @@ input[type="email"],
 input[type="tel"],
 input[type="password"],
 textarea, select {
-    height: 36px; /*safari padding fix*/
+    height: 36px; 
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
@@ -104,7 +104,7 @@ textarea {
 }
 select {
 	min-width: 50px;
-	height: 32px; /*safari padding fix*/
+	height: 32px;
 	padding: 6px;
 }
 input[type="text"]:focus,
@@ -1618,7 +1618,7 @@ label, label + * {
 	border: 1px solid #ddd;
 }
 
-.pager {
+/*.pager {
 	margin: 0 0 20px;
 }
 .pager ul {
@@ -1639,7 +1639,7 @@ label, label + * {
 	background-color: #eee;
 	padding: 8px;
 	text-align: center;
-	font-size: 14px; /*reset zeroing*/
+	font-size: 14px;
 	cursor: pointer;
 }
 .pager li span {
@@ -1671,7 +1671,7 @@ label, label + * {
 .pager li a:hover {
 	border-color: transparent;
 	background-color: #ddd;
-}
+}*/
 
 
 /********** PRODUCT PAGE **********/

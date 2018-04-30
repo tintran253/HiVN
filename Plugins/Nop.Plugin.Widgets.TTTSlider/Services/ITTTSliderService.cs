@@ -9,9 +9,15 @@ namespace Nop.Plugin.Widgets.TTTSlider.Services
     public interface ITTTSliderService
     {
         /// <summary>
-        /// Logs the specified record.
+        /// 
         /// </summary>
-        /// <param name="record">The record.</param>
+        /// <param name="slider"></param>
         void Add(Domain.TTTSlider slider);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slider"></param>
+        IEnumerable<Domain.TTTSlider> GetAll();
     }
 }

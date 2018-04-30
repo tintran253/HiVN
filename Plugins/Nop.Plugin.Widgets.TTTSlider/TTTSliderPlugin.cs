@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.TTTSlider
                 ControllerName = "TTTSlider",
                 ActionName = "Configure",
                 Visible = true,
-                RouteValues = new RouteValueDictionary() { { "area", null } },
+                RouteValues = new RouteValueDictionary() { { "area", "Admin" } },
             };
             var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "TTT Slider plugins");
             if (pluginNode != null)

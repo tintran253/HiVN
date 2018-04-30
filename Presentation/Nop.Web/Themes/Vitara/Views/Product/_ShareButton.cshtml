@@ -1,0 +1,8 @@
+﻿@model ProductDetailsModel
+@if (!string.IsNullOrWhiteSpace(Model.PageShareCode))
+{
+    @*<div class="addthis_inline_share_toolbox"></div>product-share-button*@
+    <div class="addthis_inline_share_toolbox">
+        @Html.Raw(Model.PageShareCode)
+    </div>
+}

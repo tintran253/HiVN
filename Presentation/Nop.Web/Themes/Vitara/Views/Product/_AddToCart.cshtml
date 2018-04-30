@@ -1,0 +1,108 @@
+﻿@model ProductDetailsModel.AddToCartModel
+@using Nop.Core.Domain.Orders
+@if (Model.UpdatedShoppingCartItemId > 0)
+{
+    <input asp-for="UpdatedShoppingCartItemId" type="hidden" />
+}
+@if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
+{
+    <div class="add-to-cart">
+        @if (Model.CustomerEntersPrice)
+        {
+            <div class="customer-entered-price">
+                <div class="price-input">
+                    <label asp-for="CustomerEnteredPrice" asp-postfix=":" class="enter-price-label"></label>
+                    @*round price*@
+                    <input asp-for="CustomerEnteredPrice" value="@Convert.ToInt32(Math.Ceiling(Model.CustomerEnteredPrice))" class="enter-price-input" />
+                </div>
+                <div class="price-range">
+                    @Model.CustomerEnteredPriceRange
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.MinimumQuantityNotification))
+        {
+            <div class="min-qty-notification">@Model.MinimumQuantityNotification</div>
+        }
+        @if (!Model.DisableBuyButton)
+        {
+            <div class="add-to-cart-panel pull-left">
+                @*<label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label>*@
+                @if (Model.AllowedQuantities.Count > 0)
+                {
+                    <select asp-for="EnteredQuantity" asp-items="Model.AllowedQuantities" class="qty-dropdown"></select>
+                }
+                else
+                {
+                    <div class="custom pull-left">
+                        <button onClick="decreaseQty()" class="reduced items-count" type="button"><i class="fa fa-minus">&nbsp;</i></button>
+                        @*<input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">*@
+                        <input asp-for="EnteredQuantity" class="input-text qty" type="text" />
+                        <button onClick="increaseQty()" class="increase items-count" type="button"><i class="fa fa-plus">&nbsp;</i></button>
+                    </div>
+                    <script type="text/javascript" asp-location="Footer">
+                        //increase click
+                         function increaseQty() {
+                                $("#@Html.IdFor(model => model.EnteredQuantity)").attr('value' ,+$("#@Html.IdFor(model => model.EnteredQuantity)").val() + 1);
+                            }
+                            //decrease click
+                            function decreaseQty() {
+                                if ($("#@Html.IdFor(model => model.EnteredQuantity)").val() == 0)
+                                    return false;
+                                $("#@Html.IdFor(model => model.EnteredQuantity)").attr('value', +$("#@Html.IdFor(model => model.EnteredQuantity)").val() - 1);
+                            }
+                        //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
+                        $(document).ready(function () {
+
+                            @*onClick="var result = document.getElementById('@Html.IdFor(model => model.EnteredQuantity)'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;"*@
+
+
+                            $("#@Html.IdFor(model => model.EnteredQuantity)").keydown(function(event) {
+                                if (event.keyCode == 13) {
+                                    $("#add-to-cart-button-@Model.ProductId").click();
+                                    return false;
+                                }
+                            });
+                        });
+                    </script>
+                }
+                @{
+                    var addToCartText = "";
+                    if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemType.HasValue && Model.UpdateShoppingCartItemType.Value == ShoppingCartType.ShoppingCart)
+                    {
+                        addToCartText = T("ShoppingCart.AddToCart.Update").Text;
+                    }
+                    else
+                    {
+                        addToCartText = T("ShoppingCart.AddToCart").Text;
+                        if (Model.IsRental)
+                        {
+                            addToCartText = T("ShoppingCart.Rent").Text;
+                        }
+                        if (Model.AvailableForPreOrder)
+                        {
+                            addToCartText = T("ShoppingCart.PreOrder").Text;
+                        }
+                    }
+                    <button id="add-to-cart-button-@Model.ProductId" class="button btn-cart" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.ProductId, shoppingCartTypeId = (int) ShoppingCartType.ShoppingCart})', '#product-details-form');return false;">@addToCartText</button>
+                    @*<button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Add to Cart" type="button">Add to Cart</button>*@
+                }
+            </div>
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_add_info", additionalData = Model.ProductId })
+    </div>
+}
+
+
+
+
+@*<div class="add-to-cart">
+        <div class="pull-left">
+            <div class="custom pull-left">
+                <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="fa fa-minus">&nbsp;</i></button>
+                <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
+                <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="fa fa-plus">&nbsp;</i></button>
+            </div>
+        </div>
+        <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Add to Cart" type="button">Add to Cart</button>
+    </div>*@
