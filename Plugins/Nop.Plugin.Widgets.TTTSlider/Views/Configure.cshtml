@@ -9,17 +9,15 @@
 @await Component.InvokeAsync("StoreScopeConfiguration")
 
 
-<div class="container">
-    <div class="row">
-        <div class="panel panel-primary">
-            <div class="panel-header">
+<div class="panel panel-primary">
+    <div class="panel-header">
 
-            </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel panel-default">
             <div class="panel-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="slider-grid"></div>
-                        <script type="text/javascript">
+                <div id="slider-grid"></div>
+                <script type="text/javascript">
                             $(document).ready(function() {
                                 $("#slider-grid").kendoGrid({
                                     dataSource: {
@@ -72,11 +70,15 @@
                                             template: '<img src="#=PictureThumbnailUrl#" />',
                                             width: 100
                                         },*@
-                                        @*{
-                                            field: "Name",
+                                        {
+                                            field: "Description",
                                             title: "@T("Admin.Catalog.Products.Fields.Name")",
-                                            width: 300
-                                        },*@
+                                            width: 200
+                                        },{
+                                            field: "Hint",
+                                            title: "@T("Admin.Catalog.Products.Fields.Hint")",
+                                            width: 100
+                                        },
                                         @*{
                                             field: "Published",
                                             title: "@T("Admin.Catalog.Products.Fields.Published")",
@@ -94,9 +96,7 @@
                                     ]
                                 });
                             });
-                        </script>
-                    </div>
-                </div>
+                </script>
             </div>
         </div>
     </div>

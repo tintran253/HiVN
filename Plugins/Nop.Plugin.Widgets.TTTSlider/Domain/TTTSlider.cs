@@ -12,7 +12,7 @@ namespace Nop.Plugin.Widgets.TTTSlider.Domain
 {
     public class TTTSlider: BaseEntity
     {
-        public string ImageUrl { get; set; }
+        public int PictureId { get; set; }
         public string Hint { get; set; }
         public string Description { get; set; }
         public string UrlActionClick { get; set; }
