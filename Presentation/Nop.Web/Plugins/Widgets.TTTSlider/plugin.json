@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Widgets",
+  "FriendlyName": "TTTSlider",
+  "SystemName": "Widgets.TTTSlider",
+  "Version": "0.1",
+  "SupportedVersions": [ "4.00" ],
+  "Author": "TinTT",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.TTTSlider.dll",
+  "Description": "For slider using slider revolutions"
+}

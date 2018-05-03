@@ -161,8 +161,31 @@
     </div>
 </footer>
 <!-- End Footer -->
+<style>
+    #calltrap-btn {
+        background-color: white;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        display: block;
+        height: 64px;
+        line-height: 100px;
+        opacity: .7;
+        position: fixed;
+        right: 80px;
+        bottom: 50px;
+        text-align: center;
+        width: 64px;
+        z-index: 9999;
+        -webkit-animation: calltrap_opacity 3s infinite linear;
+        -moz-animation: calltrap_opacity 3s infinite linear;
+        -o-animation: calltrap_opacity 3s infinite linear;
+        animation: calltrap_opacity 3s infinite linear;
+    }
 
-
+</style>
+<a id="calltrap-btn" title="Hoang Ha Logistics" target="_blank" class="b-calltrap-btn calltrap_offline hidden-phone visible-tablet" href="http://localhost:4200">
+    <img src="~/images/logistics-icon.png" style="margin-top: -35px;" />
+</a>
 
 
 <script type="text/javascript" asp-location="Footer">

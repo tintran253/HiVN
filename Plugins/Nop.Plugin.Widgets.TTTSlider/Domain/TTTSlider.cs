@@ -12,19 +12,20 @@ namespace Nop.Plugin.Widgets.TTTSlider.Domain
 {
     public class TTTSlider: BaseEntity
     {
-        public string ImageUrl { get; set; }
+        public int PictureId { get; set; }
         public string Hint { get; set; }
         public string Description { get; set; }
         public string UrlActionClick { get; set; }
-        public int ProductId { get; set; }
-        public int CategoryId { get; set; }
+        public bool IsActive { get; set; }
+        public int? ProductId { get; set; }
+        public int? CategoryId { get; set; }
         public int StoreId { get; set; }
         public int LanguageId { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public DateTime ExpiredOnUtc { get; set; }
 
-        public Product Product { get; set; }
-        public Store Store { get; set; }
-        public Language Language { get; set; }
+        //public virtual Product Product { get; set; }
+        //public virtual Store Store { get; set; }
+        //public virtual Language Language { get; set; }
     }
 }

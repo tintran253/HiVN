@@ -54,7 +54,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Widgets.NivoSlider</OutputPath>
+    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Widgets.NivoSlider\net461\net461\net461\</OutputPath>
     <OutDir>$(OutputPath)</OutDir>
   </PropertyGroup>
 

@@ -1,0 +1,7 @@
+﻿@model ProductDetailsModel
+@if (Model.EmailAFriendEnabled)
+{
+    <p class="email-friend">
+        <a href="#" onclick="setLocation('@Url.RouteUrl("ProductEmailAFriend", new { productId = Model.Id })')" class=""><span>@T("Products.EmailAFriend")</span></a>
+    </p>
+}

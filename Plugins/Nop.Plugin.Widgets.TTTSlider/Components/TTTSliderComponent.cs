@@ -11,5 +11,9 @@ namespace Nop.Plugin.Widgets.TTTSlider.Components
     [ViewComponent(Name = "TTTSlider")]
     public class TTTSliderComponent: NopViewComponent
     {
+        public IViewComponentResult Invoke(string widgetZone, object additionalData)
+        {            
+            return View("~/Plugins/Widgets.TTTSlider/Views/PublicInfo.cshtml", new TTTSlider.Domain.TTTSlider());
+        }
     }
 }

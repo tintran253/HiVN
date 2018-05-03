@@ -35,6 +35,7 @@ namespace Nop.Plugin.Widgets.TTTSlider.Data
         public void Install()
         {
             //create the table
+            //Database.SetInitializer<TTTSliderContext>(null);
             var dbScript = CreateDatabaseScript();
             Database.ExecuteSqlCommand(dbScript);
             SaveChanges();

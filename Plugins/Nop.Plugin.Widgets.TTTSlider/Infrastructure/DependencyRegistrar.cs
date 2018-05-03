@@ -5,6 +5,7 @@ using Nop.Core.Data;
 using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
 using Nop.Data;
+using Nop.Services.Security;
 using Nop.Web.Framework.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Nop.Plugin.Widgets.TTTSlider.Infrastructure
         public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder, NopConfig config)
         {
             builder.RegisterType<Services.TTTSliderService>().As<Services.ITTTSliderService>().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionService>().As<IPermissionService>().InstancePerLifetimeScope();
             //data context
             this.RegisterPluginDataContext<Data.TTTSliderContext>(builder, CONTEXT_NAME);
             //override required repository with our custom context
